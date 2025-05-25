@@ -118,8 +118,8 @@ def main():
             color: #111111 !important;
             background-color: #f5f5f5 !important;
         }
-        /* 强制所有 label 适应深浅色 */
-        label, .stTextArea label, .stTextInput label {
+        /* 强制所有 label 适应深浅色，提升优先级 */
+        label, .stTextArea label, .stTextInput label, [class^="css-"][data-testid="stMarkdownContainer"] label, [class*="stTextArea"] label, [class*="stTextInput"] label {
             color: #111111 !important;
         }
         @media (prefers-color-scheme: dark) {
@@ -137,7 +137,7 @@ def main():
                 color: #f5f5f5 !important;
                 background-color: #222 !important;
             }
-            label, .stTextArea label, .stTextInput label {
+            label, .stTextArea label, .stTextInput label, [class^="css-"][data-testid="stMarkdownContainer"] label, [class*="stTextArea"] label, [class*="stTextInput"] label {
                 color: #f5f5f5 !important;
             }
         }
