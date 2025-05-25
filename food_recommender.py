@@ -109,6 +109,10 @@ def main():
         .stMarkdown, .stTextInput, .stTextArea, .stButton>button, label, h1, h2, h3, h4, h5, h6, p, div, .st-bw, .st-cq, .stAlert, .st-bv {
             color: #111111 !important;
         }
+        /* markdown 标题容器 */
+        .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4, .stMarkdown h5, .stMarkdown h6 {
+            color: #111111 !important;
+        }
         /* 输入框内文字 */
         textarea, input {
             color: #111111 !important;
@@ -120,6 +124,9 @@ def main():
                 color: #f5f5f5 !important;
             }
             .stMarkdown, .stTextInput, .stTextArea, .stButton>button, label, h1, h2, h3, h4, h5, h6, p, div, .st-bw, .st-cq, .stAlert, .st-bv {
+                color: #f5f5f5 !important;
+            }
+            .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4, .stMarkdown h5, .stMarkdown h6 {
                 color: #f5f5f5 !important;
             }
             textarea, input {
