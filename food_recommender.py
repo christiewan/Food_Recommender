@@ -101,6 +101,22 @@ def main():
     # 使用自定义CSS来美化界面
     st.markdown("""
         <style>
+        body, .stApp {
+            background-color: #ffffff !important;
+            color: #111111 !important;
+        }
+        .stMarkdown, .stTextInput, .stTextArea, .stButton>button, label, h1, h2, h3, h4, h5, h6, p, div {
+            color: #111111 !important;
+        }
+        @media (prefers-color-scheme: dark) {
+            body, .stApp {
+                background-color: #18191A !important;
+                color: #f5f5f5 !important;
+            }
+            .stMarkdown, .stTextInput, .stTextArea, .stButton>button, label, h1, h2, h3, h4, h5, h6, p, div {
+                color: #f5f5f5 !important;
+            }
+        }
         .main {
             background-color: #ffffff;
         }
@@ -122,41 +138,27 @@ def main():
             color: #000000;
             padding: 20px;
         }
-        .stMarkdown {
-            color: #000000;
-        }
-        .stAlert {
-            color: #000000;
-        }
-        /* 修改spinner文字颜色 */
         .stSpinner > div {
             color: #000000 !important;
         }
-        /* 确保所有标题文字为黑色 */
         h3 {
             color: #000000 !important;
         }
-        /* 确保所有提示文字为黑色 */
         .stSpinner > div > div {
             color: #000000 !important;
         }
-        /* 隐藏侧边栏 */
         #MainMenu {visibility: hidden;}
         footer {visibility: hidden;}
-        /* 文本框样式 */
         .stTextArea textarea {
             font-size: 16px;
             padding: 10px;
         }
-        /* 确保所有文本输入框的标签为黑色 */
         .stTextArea label {
             color: #000000 !important;
         }
-        /* 确保所有提示文本为黑色 */
         .stTextArea p {
             color: #000000 !important;
         }
-        /* 确保所有警告文本为黑色 */
         .stWarning {
             color: #000000 !important;
         }
