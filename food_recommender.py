@@ -2,6 +2,7 @@ import streamlit as st
 from openai import OpenAI
 import os
 import sys
+import requests
 
 # --- Configuration ---
 APP_TITLE = "D老师我今天吃什么"
@@ -21,10 +22,32 @@ except Exception as e:
     st.stop()
 
 # --- Helper Functions ---
+def create_deepseek_client():
+    """创建一个配置正确的 DeepSeek 客户端"""
+    try:
+        # 创建客户端
+        client = OpenAI(
+            api_key=API_KEY,
+            base_url=BASE_URL,
+            # DeepSeek 特定的配置
+            default_headers={
+                "Authorization": f"Bearer {API_KEY}",
+                "Content-Type": "application/json"
+            }
+        )
+        return client
+    except Exception as e:
+        st.error(f"创建客户端失败: {str(e)}")
+        return None
+
 def get_food_recommendation(client, previous_recommendations=None, special_requirements=None):
     """
-    Gets a food recommendation from the AI model.
+    Gets a food recommendation from the DeepSeek model.
     """
+    if not client:
+        st.error("DeepSeek 客户端未正确初始化")
+        return None
+        
     try:
         system_prompt = """
         你是一个专业的美食推荐助手。请根据以下要求推荐一道菜：
@@ -53,14 +76,21 @@ def get_food_recommendation(client, previous_recommendations=None, special_requi
                 "content": f"之前推荐过这些菜：{', '.join(previous_recommendations)}，请推荐一道不同的菜。"
             })
 
+        # DeepSeek 特定的模型调用
         response = client.chat.completions.create(
-            model="deepseek-chat",
+            model="deepseek-chat",  # DeepSeek 的模型名称
             messages=messages,
             temperature=0.8,
+            max_tokens=1000,  # 限制响应长度
+            stream=False  # 不使用流式响应
         )
         return response.choices[0].message.content
     except Exception as e:
         st.error(f"获取推荐时出错: {str(e)}")
+        if "401" in str(e):
+            st.error("API 密钥可能无效或已过期，请检查 API 密钥配置")
+        elif "404" in str(e):
+            st.error("API 端点可能不正确，请检查 BASE_URL 配置")
         return None
 
 # --- Main Application ---
@@ -145,23 +175,39 @@ def main():
         3. 在左侧菜单中找到 "Secrets"
         4. 添加以下配置：
         ```toml
-        OPENAI_API_KEY = "你的API密钥"
+        OPENAI_API_KEY = "sk-ad5184cc837d4a6c9860bfa46ddd2c68"
         OPENAI_BASE_URL = "https://api.deepseek.com/v1"
         ```
         """)
         st.stop()
 
-    # Initialize OpenAI client
+    # Initialize DeepSeek client
+    client = create_deepseek_client()
+    if not client:
+        st.error("""
+        初始化失败，无法创建 DeepSeek 客户端。
+        
+        请检查：
+        1. API key 是否正确配置
+        2. API base URL 是否正确
+        3. 网络连接是否正常
+        """)
+        st.stop()
+
+    # 测试连接
     try:
-        client = OpenAI(api_key=API_KEY, base_url=BASE_URL)
-        # 测试连接
-        client.models.list()
+        # 使用一个简单的请求来测试连接
+        response = client.chat.completions.create(
+            model="deepseek-chat",
+            messages=[{"role": "user", "content": "test"}],
+            max_tokens=5
+        )
     except Exception as e:
         st.error(f"""
-        初始化失败，错误信息：{str(e)}
+        连接测试失败，错误信息：{str(e)}
         
         可能的原因：
-        1. API key 不正确
+        1. API key 不正确或已过期
         2. API base URL 不正确
         3. 网络连接问题
         
@@ -236,4 +282,4 @@ def main():
         st.markdown(st.session_state.current_recommendation)
 
 if __name__ == "__main__":
-    main() 
+    main()
