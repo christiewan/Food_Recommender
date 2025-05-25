@@ -118,6 +118,10 @@ def main():
             color: #111111 !important;
             background-color: #f5f5f5 !important;
         }
+        /* 强制所有 label 适应深浅色 */
+        label, .stTextArea label, .stTextInput label {
+            color: #111111 !important;
+        }
         @media (prefers-color-scheme: dark) {
             body, .stApp {
                 background-color: #18191A !important;
@@ -132,6 +136,9 @@ def main():
             textarea, input {
                 color: #f5f5f5 !important;
                 background-color: #222 !important;
+            }
+            label, .stTextArea label, .stTextInput label {
+                color: #f5f5f5 !important;
             }
         }
         .main {
