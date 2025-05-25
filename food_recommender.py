@@ -2,7 +2,6 @@ import streamlit as st
 from openai import OpenAI
 import os
 import sys
-import requests
 
 # --- Configuration ---
 APP_TITLE = "D老师我今天吃什么"
@@ -25,15 +24,10 @@ except Exception as e:
 def create_deepseek_client():
     """创建一个配置正确的 DeepSeek 客户端"""
     try:
-        # 创建客户端
+        # 使用最简单的初始化方式
         client = OpenAI(
             api_key=API_KEY,
-            base_url=BASE_URL,
-            # DeepSeek 特定的配置
-            default_headers={
-                "Authorization": f"Bearer {API_KEY}",
-                "Content-Type": "application/json"
-            }
+            base_url=BASE_URL
         )
         return client
     except Exception as e:
@@ -81,8 +75,7 @@ def get_food_recommendation(client, previous_recommendations=None, special_requi
             model="deepseek-chat",  # DeepSeek 的模型名称
             messages=messages,
             temperature=0.8,
-            max_tokens=1000,  # 限制响应长度
-            stream=False  # 不使用流式响应
+            max_tokens=1000  # 限制响应长度
         )
         return response.choices[0].message.content
     except Exception as e:
