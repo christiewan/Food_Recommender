@@ -105,16 +105,26 @@ def main():
             background-color: #ffffff !important;
             color: #111111 !important;
         }
-        .stMarkdown, .stTextInput, .stTextArea, .stButton>button, label, h1, h2, h3, h4, h5, h6, p, div {
+        /* 主要内容和所有文本 */
+        .stMarkdown, .stTextInput, .stTextArea, .stButton>button, label, h1, h2, h3, h4, h5, h6, p, div, .st-bw, .st-cq, .stAlert, .st-bv {
             color: #111111 !important;
+        }
+        /* 输入框内文字 */
+        textarea, input {
+            color: #111111 !important;
+            background-color: #f5f5f5 !important;
         }
         @media (prefers-color-scheme: dark) {
             body, .stApp {
                 background-color: #18191A !important;
                 color: #f5f5f5 !important;
             }
-            .stMarkdown, .stTextInput, .stTextArea, .stButton>button, label, h1, h2, h3, h4, h5, h6, p, div {
+            .stMarkdown, .stTextInput, .stTextArea, .stButton>button, label, h1, h2, h3, h4, h5, h6, p, div, .st-bw, .st-cq, .stAlert, .st-bv {
                 color: #f5f5f5 !important;
+            }
+            textarea, input {
+                color: #f5f5f5 !important;
+                background-color: #222 !important;
             }
         }
         .main {
