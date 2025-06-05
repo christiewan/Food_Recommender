@@ -180,6 +180,15 @@ def main():
         .stTextArea label {
             color: #000000 !important;
         }
+        /* Special styling for the requirements text area label */
+        div[data-testid="stTextArea"] label[for="requirements_input"] {
+            background-color: #1E90FF !important;
+            color: white !important;
+            padding: 8px 12px !important;
+            border-radius: 4px !important;
+            display: inline-block !important;
+            margin-bottom: 8px !important;
+        }
         .stTextArea p {
             color: #000000 !important;
         }
